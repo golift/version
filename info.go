@@ -19,6 +19,7 @@ import (
 	"runtime"
 	"strings"
 	"text/template"
+	"time"
 )
 
 // Build information. Populated at build-time.
@@ -29,6 +30,7 @@ var (
 	BuildUser string
 	BuildDate string
 	GoVersion = runtime.Version()
+	Started   = time.Now()
 )
 
 // versionInfoTmpl contains the template used by Info.
@@ -38,11 +40,13 @@ const versionInfoTmpl = `
   build date:       {{.buildDate}}
   go version:       {{.goVersion}}
   platform:         {{.platform}}
+  started:          {{.started}}
 `
 
 // Print returns version information.
 func Print(program string) string {
 	m := map[string]string{
+		"started":   Started.String(),
 		"program":   program,
 		"version":   Version,
 		"revision":  Revision,
