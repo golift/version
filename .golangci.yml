@@ -1,0 +1,15 @@
+version: "2"
+linters:
+  default: all
+  disable:
+    - nlreturn # wsl_v5 is good enough.
+    - wsl # deprecated.
+    - exhaustruct # deprecated.
+    - gomodguard # deprecated.
+    - depguard # not useful.
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports

@@ -11,6 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package version prints build information injected with -ldflags.
 package version
 
 import (
@@ -23,6 +24,8 @@ import (
 )
 
 // Build information. Populated at build-time.
+//
+//nolint:gochecknoglobals // link-time and process-start values are the API.
 var (
 	Version   string
 	Revision  string
@@ -45,7 +48,7 @@ const versionInfoTmpl = `
 
 // Print returns version information.
 func Print(program string) string {
-	m := map[string]string{
+	fields := map[string]string{
 		"started":   Started.String(),
 		"program":   program,
 		"version":   Version,
@@ -59,7 +62,9 @@ func Print(program string) string {
 	t := template.Must(template.New("version").Parse(versionInfoTmpl))
 
 	var buf bytes.Buffer
-	if err := t.ExecuteTemplate(&buf, "version", m); err != nil {
+
+	err := t.ExecuteTemplate(&buf, "version", fields)
+	if err != nil {
 		panic(err)
 	}
 
