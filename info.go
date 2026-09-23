@@ -24,6 +24,8 @@ import (
 )
 
 // Build information. Populated at build-time.
+//
+//nolint:gochecknoglobals // link-time and process-start values are the API.
 var (
 	Version   string
 	Revision  string
@@ -60,6 +62,7 @@ func Print(program string) string {
 	t := template.Must(template.New("version").Parse(versionInfoTmpl))
 
 	var buf bytes.Buffer
+
 	err := t.ExecuteTemplate(&buf, "version", fields)
 	if err != nil {
 		panic(err)

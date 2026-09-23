@@ -13,6 +13,7 @@ func TestPrintInfoAndBuildContext(t *testing.T) { //nolint:paralleltest // mutat
 	origBranch := version.Branch
 	origUser := version.BuildUser
 	origDate := version.BuildDate
+
 	t.Cleanup(func() {
 		version.Version = origVersion
 		version.Revision = origRevision
@@ -42,6 +43,7 @@ func TestPrintInfoAndBuildContext(t *testing.T) { //nolint:paralleltest // mutat
 	}
 
 	printed := version.Print("notifiarr")
+
 	wants := []string{
 		"notifiarr, version 1.2.3",
 		"branch: main",
